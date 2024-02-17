@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add exercise</title>
+</head>
+<body>
+<form action="/add-exercise-DB" method="POST">
+    <input type="text" name="name">
+    <select name="muscleType" class="form-control">
+        <option th:if="${muscleTypes} != null"
+                th:each="muscle : ${muscleTypes}"
+                th:value="${muscle}"
+                th:text="${muscle}">
+        </option>
+    </select>
+    <button type="Submit">Add</button>
+
+</form>
+</body>
+</html>
