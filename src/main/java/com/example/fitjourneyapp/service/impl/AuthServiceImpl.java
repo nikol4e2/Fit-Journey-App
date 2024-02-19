@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    //Dovrsi so implementiranje
+
     public User register(String username, String password, String repeatPassword, String name, String surname, Date dateOfBirth, double weight) {
         if(username==null || username.isEmpty() || password==null || password.isEmpty())
         {
