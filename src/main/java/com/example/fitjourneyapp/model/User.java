@@ -1,8 +1,6 @@
 package com.example.fitjourneyapp.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,8 +19,9 @@ public class User {
     private Date dateOfBirth;
     private double Weight;
 
-    @OneToMany
-    private List<Workout> workousDone;
+    @JoinColumn(name = "user_workouts", referencedColumnName="username")
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.REMOVE,orphanRemoval = true)
+    private List<Workout> workoutsDone;
 
     public User(String username, String password, String name, String surname, Date dateOfBirth, double weight) {
         this.username = username;

@@ -15,11 +15,12 @@ public class Workout {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="workoutId", unique = true, nullable = false)
     private Long workoutId;
     private String name;
     private LocalDate workoutDate;
 
-    @OneToMany
+    @OneToMany(cascade= CascadeType.ALL,fetch = FetchType.EAGER)
     private List<DoneExercise> exercises;
     private double totalVolume;
     private String comment;

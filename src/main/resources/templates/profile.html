@@ -1,0 +1,36 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+    </style>
+</head>
+<body>
+
+
+<h3>Workouts Done</h3>
+
+<ul>
+    <li th:each="workout : ${workouts}">
+        <th:block th:text="${workout.name}"></th:block> <th:block th:text="${workout.workoutDate}"></th:block>
+        <th:block th:text="${workout.workoutId}"></th:block>
+
+        <th:block>
+            <form method="post" th:action="@{'/workout/delete/{id}' (id=${workout.getWorkoutId()})}">
+                <button type="submit">
+
+                    <i>Delete</i>
+                </button>
+            </form>
+        </th:block>
+    </li>
+</ul>
+
+
+
+<a href="/add-workout">Add a new workout or track existing</a>
+</body>
+</html>

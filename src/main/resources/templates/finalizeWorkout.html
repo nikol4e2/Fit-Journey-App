@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Finalize Workout</title>
+</head>
+<body>
+<h1>Finalize Workout</h1>
+<div th:text="${workout.getName()}"></div>
+<div th:text="${totalVolume}"></div>
+<form action="/workout/finalize" method="POST">
+  <input type="hidden" name="workoutId" th:value="${workout.getWorkoutId()}">
+  <span>Add comments/ how did you feel?</span>
+  <input type="text" name="comment" >
+  <button type="submit">Finalize Workout</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Workout</title>
+</head>
+<body>
+<form action="/add-workout" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name">
+    <button id="submit" type="submit">Add new workout</button>
+</form>
+
+
+<form action="/add-existing-workout" method="POST">
+    <select name="workoutId" class="form-control">
+        <option th:if="${workouts} != null"
+                th:each="workout : ${workouts}"
+                th:text="${workout.name}"
+                th:value="${workout.getWorkoutId()}"
+        >
+        </option>
+
+    </select>
+
+    <button type="submit">Track workout</button>
+</form>
+
+</body>
+</html>

@@ -35,6 +35,12 @@ public class WorkoutServiceImpl implements WorkoutService {
     @Override
     public void addDoneExercise(Long workoutId, DoneExercise exercise) {
 
+        if(this.workoutRepository.findById(workoutId).isPresent()) {
+            Workout workout = this.workoutRepository.findById(workoutId).get();
+            workout.getExercises().add(exercise);
+            this.workoutRepository.save(workout);
+
+        }
     }
 
     @Override
@@ -82,7 +88,7 @@ public class WorkoutServiceImpl implements WorkoutService {
         if(userRepository.findByUsername(username).isPresent())
         {
             User user=userRepository.findByUsername(username).get();
-            user.getWorkousDone().add(workout);
+            user.getWorkoutsDone().add(workout);
             userRepository.save(user);
         }
     }

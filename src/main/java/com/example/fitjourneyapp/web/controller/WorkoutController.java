@@ -30,7 +30,7 @@ public class WorkoutController {
     public String getWorkoutPage(HttpServletRequest request, Model model)
     {
         User user=(User) request.getSession().getAttribute("user");
-        model.addAttribute("workouts",user.getWorkousDone());
+        model.addAttribute("workouts",user.getWorkoutsDone());
         return "addWorkout";
     }
 
@@ -43,7 +43,7 @@ public class WorkoutController {
         Workout workout=this.workoutService.save(name,user);
 
 
-        user.getWorkousDone().add(workout);
+        user.getWorkoutsDone().add(workout);
         authService.save(user);
         return "redirect:/workout/"+workout.getWorkoutId()+"/add-exercise";
     }
@@ -59,12 +59,12 @@ public class WorkoutController {
 
             //Gi predavame site gotovi vezbi koi veke se dodadeni na treningot
             model.addAttribute("doneExercises",workout.getExercises());
-            return  "addExercisesToWorkout";
+            return  "addExerciseToWorkout";
         }
         return "redirect:/add-workout";
     }
 
-    @PostMapping
+    @PostMapping(path = "/workout/add-exercise")
     public String addDoneExercise(@RequestParam Long exerciseId,@RequestParam Long workoutId)
     {
         if(this.workoutService.findById(workoutId).isPresent())
@@ -76,7 +76,7 @@ public class WorkoutController {
             workoutService.addDoneExercise(workoutId,doneExercise);
             return "redirect:/workout/"+workoutId+"/add-exercise";
         }
-        return "redirect:/add-workout";
+        return "redirect:/workout/"+workoutId+"/add-exercise";
 
     }
 
@@ -126,13 +126,13 @@ public class WorkoutController {
         return "redirect:/profile";
     }
 
-    @PostMapping
+    @PostMapping(path = "/workout/delete/{id}")
     public String deleteWorkout(@PathVariable Long id,HttpServletRequest request)
     {
         if(this.workoutService.findById(id).isPresent())
         {
             User user=(User) request.getSession().getAttribute("user");
-            user.getWorkousDone().removeIf(r->r.getWorkoutId().equals(id));
+            user.getWorkoutsDone().removeIf(r->r.getWorkoutId().equals(id));
             this.workoutService.deleteById(id);
             //MOZEBI IMA POTREBA DA GO IZBRISES WORKOUT I OD KAJ USER PRVO
             this.authService.save(user);
