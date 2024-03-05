@@ -29,7 +29,25 @@
     </li>
 </ul>
 
+<table style="border: solid 1px black;">
+    <thead>
+    <tr>
+        <th>Roll No.</th>
+        <th>Score</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="w: ${workoutsByName}">
+        <td th:text="${w.key}" />
+        <td>
+            <form th:action="@{/history/${w.key}}" th:method="POST">
+                <button type="submit">History</button>
+            </form>
+        </td>
 
+    </tr>
+    </tbody>
+</table>
 
 <a href="/add-workout">Add a new workout or track existing</a>
 </body>

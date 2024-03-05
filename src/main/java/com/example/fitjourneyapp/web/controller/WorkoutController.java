@@ -108,10 +108,18 @@ public class WorkoutController {
             request.getSession().setAttribute("totalVolume",workout.getTotalVolume());
             request.getSession().setAttribute("workout",workout);
         }
-        return "redirct:/workout/"+workoutId+"/finalize";
+        return "redirect:/workout/"+workoutId+"/finalize";
     }
 
-    @GetMapping(path = "/workout/finalize")
+    @GetMapping("/workout/{id}/finalize")
+    public String finalizeWorkout(@PathVariable Long id,HttpServletRequest request,Model model)
+    {
+        model.addAttribute("workout",(Workout)request.getSession().getAttribute("workout"));
+        model.addAttribute("totalVolume",request.getSession().getAttribute("totalVolume"));
+        return "finalizeWorkout";
+    }
+
+    @PostMapping(path = "/workout/finalize")
     public String addCommnet(HttpServletRequest request,@RequestParam Long workoutId,@RequestParam String comment)
     {
         User user=(User) request.getSession().getAttribute("user");
