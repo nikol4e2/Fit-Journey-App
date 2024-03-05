@@ -133,9 +133,10 @@ public class WorkoutController {
         {
             User user=(User) request.getSession().getAttribute("user");
             user.getWorkoutsDone().removeIf(r->r.getWorkoutId().equals(id));
-            this.workoutService.deleteById(id);
-            //MOZEBI IMA POTREBA DA GO IZBRISES WORKOUT I OD KAJ USER PRVO
             this.authService.save(user);
+            this.workoutService.deleteById(id);
+
+
         }
         return "redirect:/profile";
 

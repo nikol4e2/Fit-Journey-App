@@ -50,6 +50,7 @@ public class WorkoutServiceImpl implements WorkoutService {
 
     @Override
     public void deleteDoneExercise(Long workoutId, Long exerciseId) {
+        //TODO -Implement
 
     }
 

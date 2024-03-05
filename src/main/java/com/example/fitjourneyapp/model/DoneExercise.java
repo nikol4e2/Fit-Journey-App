@@ -16,10 +16,10 @@ public class DoneExercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade =CascadeType.ALL)
     private Exercise exercise;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     List<ExerciseSet> sets;
 
     public DoneExercise(Exercise exercise) {
