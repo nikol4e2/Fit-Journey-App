@@ -3,5 +3,6 @@ spring.datasource.username=na
 spring.datasource.password=
 
 spring.h2.console.enabled=true
+spring.jpa.hibernate.ddl-auto = update
 
 spring.h2.console.path=/h2

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Track workout</title>
+</head>
+<body>
+    <div th:text="${newWorkout.getName()}"></div>
+    <div th:text="${newWorkout.getExercises()}"></div>
+        <ul>
+            <li th:each="doneExercise : ${previoslyDoneExercises}">
+                <div>
+                    <th:block th:text="${doneExercise.getExercise().getName()}"></th:block>
+                    <ul>
+                        <li th:each="set : ${doneExercise.sets}">
+                            <th:block th:text="${set.reps}"></th:block>
+                            <th:block th:text="${set.weight}"></th:block>
+                            <form action="/add-set" method="POST">
+
+                            </form>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+</body>
+</html>

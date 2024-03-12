@@ -7,6 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 @Controller
 public class WorkoutController {
 
@@ -149,4 +153,26 @@ public class WorkoutController {
         return "redirect:/profile";
 
     }
+
+    //TRACKING WORKOUTS
+
+    @GetMapping("/workout/history/{name}")
+    public String getHistory(@PathVariable String name,HttpServletRequest request,Model model)
+    {
+        if(!name.isEmpty())
+        {
+            HashMap<String, List<Workout>> workoutsByName=(HashMap<String, List<Workout>>) request.getSession().getAttribute("workoutsByName");
+            List<Workout> workouts=workoutsByName.get(name);
+            model.addAttribute("workouts",workouts);
+
+        }
+        return "history";
+    }
+
+    @PostMapping("/workout/history")
+    public String history(@RequestParam String workoutName)
+    {
+        return "redirect:/workout/history/"+workoutName;
+    }
+
 }

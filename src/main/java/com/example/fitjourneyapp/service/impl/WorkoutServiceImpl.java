@@ -70,7 +70,6 @@ public class WorkoutServiceImpl implements WorkoutService {
             for(int j=0;j<exercises.get(i).getSets().size();j++)
             {
                 DoneExercise exercise=exercises.get(i);
-                //Napravi tocna formula
                 volume+=exercise.getSets().get(j).getWeight()*exercise.getSets().get(j).getReps();
             }
         }

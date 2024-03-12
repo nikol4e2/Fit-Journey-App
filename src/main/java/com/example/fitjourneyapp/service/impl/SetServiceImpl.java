@@ -30,4 +30,17 @@ public class SetServiceImpl implements SetService {
         return this.setRepository.findById(id);
     }
 
+    @Override
+    public Optional<ExerciseSet> edit(Long id, int reps, Double weight) {
+        ExerciseSet exerciseSet=this.findById(id).get();
+        if(exerciseSet!=null)
+        {
+            exerciseSet.setReps(reps);
+            exerciseSet.setWeight(weight);
+            this.setRepository.save(exerciseSet);
+        }
+        return Optional.of(exerciseSet);
+    }
+
+
 }

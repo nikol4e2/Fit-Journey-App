@@ -8,4 +8,5 @@ public interface SetService {
     ExerciseSet save(int reps,Double weight);
     void deleteById(Long id);
     Optional<ExerciseSet> findById(Long id);
+    Optional<ExerciseSet> edit(Long id,int reps,Double weight);
 }
