@@ -38,7 +38,7 @@ public class RegisterController {
     {
         try {
             this.authService.register(username, password, repeatPassword, name, surname, dateOfBirth, weight);
-            return "redirect:/home";
+            return "redirect:/login";
         }catch (PasswordsDoNotMatchException | InvalidUserCredentialsException exception)
         {
             return "redirect:/register?error="+exception.getMessage();

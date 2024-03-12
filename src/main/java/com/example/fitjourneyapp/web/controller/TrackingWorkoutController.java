@@ -47,7 +47,7 @@ public class TrackingWorkoutController {
                 DoneExercise exercise=new DoneExercise(oldExercise.getExercise());
                 for(int j=0;j<oldExercise.getSets().size();j++)
                 {
-                    
+
 
                     ExerciseSet set=setService.save(oldExercise.getSets().get(j).getReps(),oldExercise.getSets().get(j).getWeight());
                     exercise.getSets().add(set);
