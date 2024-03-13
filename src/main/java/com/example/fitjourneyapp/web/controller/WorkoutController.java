@@ -7,9 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class WorkoutController {
@@ -69,7 +67,7 @@ public class WorkoutController {
     }
 
     @PostMapping(path = "/workout/add-exercise")
-    public String addDoneExercise(@RequestParam Long exerciseId,@RequestParam Long workoutId)
+    public String addDoneExercise(@RequestParam Long exerciseId,@RequestParam Long workoutId,@RequestParam int isTracking)
     {
         if(this.workoutService.findById(workoutId).isPresent())
         {
@@ -78,6 +76,10 @@ public class WorkoutController {
             DoneExercise doneExercise=new DoneExercise(exercise);
             doneExerciseService.save(doneExercise);
             workoutService.addDoneExercise(workoutId,doneExercise);
+            if(isTracking==1)
+            {
+                return "redirect:/edit-existing/"+workoutId;
+            }
             return "redirect:/workout/"+workoutId+"/add-exercise";
         }
         return "redirect:/workout/"+workoutId+"/add-exercise";
@@ -89,13 +91,17 @@ public class WorkoutController {
     //Dodavanje na set vo vezba
 
     @PostMapping(path = "/add-set")
-    public String addSet(@RequestParam Long workoutId,@RequestParam Long doneExerciseId,@RequestParam int reps,@RequestParam double weight)
+    public String addSet(@RequestParam Long workoutId,@RequestParam Long doneExerciseId,@RequestParam int reps,@RequestParam double weight,@RequestParam int isTracking)
     {
         if(this.doneExerciseService.findById(doneExerciseId).isPresent())
         {
             DoneExercise doneExercise=this.doneExerciseService.findById(doneExerciseId).get();
             doneExercise.getSets().add(new ExerciseSet(reps,weight));
             this.doneExerciseService.update(doneExercise);
+            if(isTracking==1)
+            {
+                return "redirect:/edit-existing/"+workoutId;
+            }
         }
         return "redirect:/workout/"+workoutId+"/add-exercise";
 
@@ -163,6 +169,15 @@ public class WorkoutController {
         {
             HashMap<String, List<Workout>> workoutsByName=(HashMap<String, List<Workout>>) request.getSession().getAttribute("workoutsByName");
             List<Workout> workouts=workoutsByName.get(name);
+
+            //gi sortirame site workouts od dadeno ime spored datata pocnuvajki od najnoviot
+            Collections.sort(workouts, new Comparator<Workout>() {
+                @Override
+                public int compare(Workout o1, Workout o2) {
+                    return o1.getWorkoutDate().compareTo(o2.getWorkoutDate());
+                }
+            }.reversed());
+
             model.addAttribute("workouts",workouts);
 
         }

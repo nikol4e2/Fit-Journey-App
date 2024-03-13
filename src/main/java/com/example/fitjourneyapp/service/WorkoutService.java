@@ -16,6 +16,7 @@ public interface WorkoutService {
     double calculateTotalVolume(Long workoutId);
     Workout update(Workout workout);
 
+
     //Mozebi ke ima potreba da se implementira vo authservice kaj user-ot
     void addWorkoutToUser(String username,Workout workout);
 }

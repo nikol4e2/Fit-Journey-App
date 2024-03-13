@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Track workout</title>
+    <style>
+        .symbol-button {
+            font-size: 8px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #ffffff;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div th:text="${newWorkout.getName()}"></div>
@@ -13,17 +24,48 @@
                     <th:block th:text="${doneExercise.getExercise().getName()}"></th:block>
                     <ul>
                         <li th:each="set : ${doneExercise.sets}">
-                            <th:block th:text="${set.reps}"></th:block>
-                            <th:block th:text="${set.weight}"></th:block>
-                            <form action="/add-set" method="POST">
+                           
+                            <form action="/edit/set" method="POST">
+                                <input type="hidden" th:value="${set.getId()}" name="id">
+                                <input type="hidden" th:value="${newWorkout.getWorkoutId()}" name="workoutId">
+                                <input type="text" id="reps" name="reps" th:value="${set.reps}">
+                                <input type="text" id="weight" name="weight" th:value="${set.weight}">
 
+                                <button type="submit" class="symbol-button">&#10004;</button>
                             </form>
                         </li>
+                        <form action="/add-set" method="POST">
+                            <input type="hidden" th:value="${doneExercise.getId()}" name="doneExerciseId">
+                            <input type="hidden" th:value="${newWorkout.getWorkoutId()}" name="workoutId">
+                            <input type="hidden" th:value="1" name="isTracking">
+                            <span>Reps:</span>
+                            <input type="number" name="reps" min="1">
+                            <span>Weight:</span>
+                            <input type="number" name="weight" step="0.1" min="1">
+                            <button type="submit">Add set</button>
+                        </form>
 
                     </ul>
                 </div>
             </li>
         </ul>
+    <form action="/workout/add-exercise" method="post">
 
+        <input type="hidden" th:value="${newWorkout.getWorkoutId()}" name="workoutId">
+        <input type="hidden" th:value="1" name="isTracking">
+        <select name="exerciseId" class="form-control">
+            <option th:if="${exercises} != null"
+                    th:each="exercise : ${exercises}"
+                    th:value="${exercise.getId()}"
+                    th:text="${exercise.getName()}">
+            </option>
+        </select>
+        <button type="submit">Add exercise</button>
+    </form>
+
+    <form action="/workout/complete-workout" method="POST">
+        <input type="hidden" th:value="${newWorkout.getWorkoutId()}" name="workoutId">
+        <button type="submit">Complete workout</button>
+    </form>
 </body>
 </html>

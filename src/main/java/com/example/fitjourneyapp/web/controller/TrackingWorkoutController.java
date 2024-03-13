@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,8 +33,23 @@ public class TrackingWorkoutController {
         this.setService = setService;
     }
 
+    @GetMapping(path = "/edit-existing/{id}")
+    public String getEditWorkout(@PathVariable Long id, HttpServletRequest request,Model model)
+    {
+        Workout workout=(Workout) workoutService.findById(id).get();
+        if(workout!=null)
+        {
+            model.addAttribute("newWorkout",workout);
+            model.addAttribute("previoslyDoneExercises",workout.getExercises());
+            model.addAttribute("exercises",exerciseService.findAll());
+            return "trackworkout";
+        }
+        model.addAttribute("hasError",true);
+
+        return "trackworkout";
+    }
     @GetMapping(path = "/add-existing-workout/{id}")
-    public String getTrackWorkout(@PathVariable Long id, HttpServletRequest request, Model model) {
+    public String getTrackWorkout(@PathVariable Long id,  HttpServletRequest request, Model model) {
         Workout oldWorkout=workoutService.findById(id).get();
         if(oldWorkout!=null)
         {
@@ -61,13 +78,25 @@ public class TrackingWorkoutController {
             workoutService.update(newWorkout);
             user.getWorkoutsDone().add(newWorkout);
             authService.save(user);
-            model.addAttribute("newWorkout",newWorkout);
-            model.addAttribute("previoslyDoneExercises",newWorkout.getExercises());
-            return "trackworkout";
+          //  model.addAttribute("newWorkout",newWorkout);
+           // model.addAttribute("previoslyDoneExercises",newWorkout.getExercises());
+           // model.addAttribute("exercises",exerciseService.findAll());
+            return "redirect:/edit-existing/"+newWorkout.getWorkoutId();
         }
         model.addAttribute("hasError",true);
         model.addAttribute("error","Old workout not found");
         return "trackworkout";
+    }
+
+
+    @PostMapping(path="/edit/set")
+    private String editSet(@RequestParam Long workoutId,@RequestParam Long id,@RequestParam int reps,@RequestParam double weight)
+    {
+        if(id!=null)
+        {
+            this.setService.edit(id,reps,weight);
+        }
+        return "redirect:/edit-existing/"+workoutId;
     }
 
 }
