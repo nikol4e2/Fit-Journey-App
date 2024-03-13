@@ -48,6 +48,8 @@ public class TrackingWorkoutController {
 
         return "trackworkout";
     }
+
+    //Imam 2 mapping za get pri tracking na wokrkout, ovoj e dokolku prv pat go kreirame noviot workout so template od stariot
     @GetMapping(path = "/add-existing-workout/{id}")
     public String getTrackWorkout(@PathVariable Long id,  HttpServletRequest request, Model model) {
         Workout oldWorkout=workoutService.findById(id).get();
@@ -57,6 +59,7 @@ public class TrackingWorkoutController {
 
             User user=(User)request.getSession().getAttribute("user");
             Workout newWorkout=workoutService.save(oldWorkout.getName(),user);
+            //Gi dodavame site vezbi so sets od stariot vo noviot workout
             List<DoneExercise> newExercises=new ArrayList<>();
             for(int i=0;i<oldWorkout.getExercises().size();i++)
             {
@@ -78,9 +81,7 @@ public class TrackingWorkoutController {
             workoutService.update(newWorkout);
             user.getWorkoutsDone().add(newWorkout);
             authService.save(user);
-          //  model.addAttribute("newWorkout",newWorkout);
-           // model.addAttribute("previoslyDoneExercises",newWorkout.getExercises());
-           // model.addAttribute("exercises",exerciseService.findAll());
+
             return "redirect:/edit-existing/"+newWorkout.getWorkoutId();
         }
         model.addAttribute("hasError",true);
@@ -89,6 +90,7 @@ public class TrackingWorkoutController {
     }
 
 
+    //Dokolku ima izmeni vo sets i reps za noviot workout ovde gi zacuvuvame tie izmeni
     @PostMapping(path="/edit/set")
     private String editSet(@RequestParam Long workoutId,@RequestParam Long id,@RequestParam int reps,@RequestParam double weight)
     {

@@ -171,6 +171,8 @@ public class WorkoutController {
             List<Workout> workouts=workoutsByName.get(name);
 
             //gi sortirame site workouts od dadeno ime spored datata pocnuvajki od najnoviot
+
+            //TODO -Pronajdi zosto ne gi sortira
             Collections.sort(workouts, new Comparator<Workout>() {
                 @Override
                 public int compare(Workout o1, Workout o2) {
