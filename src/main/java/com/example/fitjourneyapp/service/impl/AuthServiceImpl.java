@@ -51,4 +51,23 @@ public class AuthServiceImpl implements AuthService {
     public User save(User user) {
         return this.userRepository.save(user);
     }
+
+    @Override
+    public User edit(String username, String password, String repeatPassword, String name, String surname, Date dateOfBirth, double weight) {
+        User user=(User) this.userRepository.findByUsername(username).get();
+        if(user!=null)
+        {
+            if(password!=repeatPassword)
+            {
+                throw new PasswordsDoNotMatchException();
+            }
+            user.setPassword(password);
+            user.setName(name);
+            user.setDateOfBirth(dateOfBirth);
+            user.setWeight(weight);
+
+        }
+        return this.userRepository.save(user);
+
+    }
 }

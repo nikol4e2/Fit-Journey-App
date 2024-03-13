@@ -60,5 +60,17 @@ public class ProfileController {
         return "profile";
     }
 
+    @GetMapping(path = "/edit")
+    public String getEditProfilePage(HttpServletRequest request,Model model)
+    {
+        User user=(User)request.getSession().getAttribute("user");
+        if(user!=null)
+        {
+            model.addAttribute("user",user);
+
+        }
+        return "editProfile";
+    }
+
 
 }
