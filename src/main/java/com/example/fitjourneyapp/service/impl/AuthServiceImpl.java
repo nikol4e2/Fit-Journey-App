@@ -1,6 +1,7 @@
 package com.example.fitjourneyapp.service.impl;
 
 import com.example.fitjourneyapp.model.User;
+import com.example.fitjourneyapp.model.exceptions.InvalidDateException;
 import com.example.fitjourneyapp.model.exceptions.InvalidUserCredentialsException;
 import com.example.fitjourneyapp.model.exceptions.PasswordsDoNotMatchException;
 import com.example.fitjourneyapp.model.exceptions.UserNameAlreadyExistsException;
@@ -8,6 +9,10 @@ import com.example.fitjourneyapp.repository.UserRepository;
 import com.example.fitjourneyapp.service.AuthService;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Service
@@ -43,6 +48,12 @@ public class AuthServiceImpl implements AuthService {
         {
             throw new UserNameAlreadyExistsException(username);
         }
+        Date date=Date.from(LocalDate.now().minusYears(5).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        if(dateOfBirth.after(date))
+        {
+            throw new InvalidDateException();
+
+        }
         User user=new User(username,password,name,surname,dateOfBirth,weight);
         return this.userRepository.save(user);
     }
@@ -57,13 +68,22 @@ public class AuthServiceImpl implements AuthService {
         User user=(User) this.userRepository.findByUsername(username).get();
         if(user!=null)
         {
-            if(password!=repeatPassword)
+            if(!password.equals(repeatPassword))
             {
                 throw new PasswordsDoNotMatchException();
             }
+            Date date=Date.from(LocalDate.now().minusYears(5).atStartOfDay(ZoneId.systemDefault()).toInstant());
+            if(dateOfBirth.after(date))
+            {
+                throw new InvalidDateException();
+
+            }
+            user.setDateOfBirth(dateOfBirth);
             user.setPassword(password);
             user.setName(name);
-            user.setDateOfBirth(dateOfBirth);
+
+
+
             user.setWeight(weight);
 
         }
