@@ -5,7 +5,9 @@
     <title>Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-
+        tr{
+            border: #343a40;
+        }
     </style>
 </head>
 <body>
@@ -13,21 +15,6 @@
 
 <h3>Workouts Done</h3>
 
-<ul>
-    <li th:each="workout : ${workouts}">
-        <th:block th:text="${workout.name}"></th:block> <th:block th:text="${workout.workoutDate}"></th:block>
-        <th:block th:text="${workout.workoutId}"></th:block>
-
-        <th:block>
-            <form method="post" th:action="@{'/workout/delete/{id}' (id=${workout.getWorkoutId()})}">
-                <button type="submit">
-
-                    <i>Delete</i>
-                </button>
-            </form>
-        </th:block>
-    </li>
-</ul>
 
 <table style="border: solid 1px black;">
     <thead>
@@ -50,8 +37,9 @@
     </tbody>
 </table>
 
-<a href="/add-workout">Add a new workout or track existing</a>
+<div><a href="/add-workout">Add a new workout or track existing</a></div>
 
-<a href="/profile/edit">Edit profile</a>
+<div><a href="/profile/edit">Edit profile</a></div>
+<div><a href="/profile/weight-history">See your weight history or add new weight</a></div>
 </body>
 </html>

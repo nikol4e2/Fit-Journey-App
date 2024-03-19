@@ -1,11 +1,13 @@
 package com.example.fitjourneyapp.service.impl;
 
 import com.example.fitjourneyapp.model.User;
+import com.example.fitjourneyapp.model.Weight;
 import com.example.fitjourneyapp.model.exceptions.InvalidDateException;
 import com.example.fitjourneyapp.model.exceptions.InvalidUserCredentialsException;
 import com.example.fitjourneyapp.model.exceptions.PasswordsDoNotMatchException;
 import com.example.fitjourneyapp.model.exceptions.UserNameAlreadyExistsException;
 import com.example.fitjourneyapp.repository.UserRepository;
+import com.example.fitjourneyapp.repository.WeightRepository;
 import com.example.fitjourneyapp.service.AuthService;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +21,11 @@ import java.util.Date;
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
+    private final WeightRepository weightRepository;
 
-    public AuthServiceImpl(UserRepository userRepository) {
+    public AuthServiceImpl(UserRepository userRepository, WeightRepository weightRepository) {
         this.userRepository = userRepository;
+        this.weightRepository = weightRepository;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
 
-    public User register(String username, String password, String repeatPassword, String name, String surname, Date dateOfBirth, double weight) {
+    public User register(String username, String password, String repeatPassword, String name, String surname, Date dateOfBirth, float weight) {
         if(username==null || username.isEmpty() || password==null || password.isEmpty())
         {
             throw new InvalidUserCredentialsException();
@@ -54,7 +58,8 @@ public class AuthServiceImpl implements AuthService {
             throw new InvalidDateException();
 
         }
-        User user=new User(username,password,name,surname,dateOfBirth,weight);
+        Weight weightObj=weightRepository.save(new Weight(weight));
+        User user=new User(username,password,name,surname,dateOfBirth,weightObj);
         return this.userRepository.save(user);
     }
 
@@ -64,7 +69,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User edit(String username, String password, String repeatPassword, String name, String surname, Date dateOfBirth, double weight) {
+    public User edit(String username, String password, String repeatPassword, String name, String surname, Date dateOfBirth, float weight) {
         User user=(User) this.userRepository.findByUsername(username).get();
         if(user!=null)
         {
@@ -82,9 +87,9 @@ public class AuthServiceImpl implements AuthService {
             user.setPassword(password);
             user.setName(name);
 
+            Weight weightObj=this.weightRepository.save(new Weight(weight));
+            user.getWeight().add(weightObj);
 
-
-            user.setWeight(weight);
 
         }
         return this.userRepository.save(user);
