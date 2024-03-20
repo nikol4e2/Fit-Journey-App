@@ -1,10 +1,7 @@
 package com.example.fitjourneyapp.model;
 
 import com.example.fitjourneyapp.model.enumerations.MuscleType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -17,9 +14,13 @@ public class Exercise {
     //Cuvame informacii za toa koj muskul primarno e pogoden od vezbata
     private MuscleType primaryMuscle;
 
+
+
+
     public Exercise(String name, MuscleType primaryMuscle) {
         this.name = name;
         this.primaryMuscle = primaryMuscle;
+
     }
 
     public Exercise() {

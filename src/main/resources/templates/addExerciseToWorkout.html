@@ -1,57 +1,111 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AddExercise</title>
+    <title>Add Exercise - Fit Journey</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
 </head>
 <body>
-<div th:text="${workout.getName()}"></div>
-<div th:if="${doneExercises} != null">
-    <ul>
-        <li th:each="doneExercise : ${doneExercises}">
-            <div>
-                <th:block th:text="${doneExercise.getExercise().getName()}"></th:block>
-                <ul>
-                    <li th:each="set : ${doneExercise.sets}">
-                        <th:block th:text="${set.reps}"></th:block>
-                        <th:block th:text="${set.weight}"></th:block>
-                    </li>
-                    <li>
-                        <form action="/add-set" method="POST">
-                            <input type="hidden" th:value="${doneExercise.getId()}" name="doneExerciseId">
-                            <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
-                            <input type="hidden" th:value="0" name="isTracking">
-                            <span>Reps:</span>
-                            <input type="number" name="reps" min="1">
-                            <span>Weight:</span>
-                            <input type="number" name="weight" step="0.1" min="1">
-                            <button type="submit">Add set</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </li>
-    </ul>
+
+<div class="container">
+    <h1>Add Exercise</h1>
+    <div th:text="${workout.getName()}"></div>
+    <div th:if="${doneExercises != null}">
+        <ul>
+            <li th:each="doneExercise : ${doneExercises}">
+                <div>
+                    <span th:text="${doneExercise.getExercise().getName()}"></span>
+                    <ul>
+                        <li th:each="set : ${doneExercise.sets}">
+                            <span th:text="${set.reps}"></span>
+                            <span th:text="${set.weight}"></span>
+                        </li>
+                        <li>
+                            <form action="/add-set" method="POST">
+                                <input type="hidden" th:value="${doneExercise.getId()}" name="doneExerciseId">
+                                <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
+                                <input type="hidden" th:value="0" name="isTracking">
+                                <span>Reps:</span>
+                                <input type="number" name="reps" min="1">
+                                <span>Weight:</span>
+                                <input type="number" name="weight" step="0.1" min="1">
+                                <button type="submit">Add set</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <form action="/workout/add-exercise" method="POST">
+        <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
+        <input type="hidden" th:value="0" name="isTracking">
+        <select name="exerciseId" class="form-control">
+            <option th:if="${exercises != null}"
+                    th:each="exercise : ${exercises}"
+                    th:value="${exercise.getId()}"
+                    th:text="${exercise.getName()}">
+            </option>
+        </select>
+        <button type="submit" class="btn btn-primary">Add exercise</button>
+    </form>
+    <form action="/workout/complete-workout" method="POST">
+        <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
+        <button type="submit" class="btn btn-primary">Complete workout</button>
+    </form>
 </div>
-<form action="/workout/add-exercise" method="post">
 
-    <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
-    <input type="hidden" th:value="0" name="isTracking">
 
-    <select name="exerciseId" class="form-control">
-        <option th:if="${exercises} != null"
-                th:each="exercise : ${exercises}"
-                th:value="${exercise.getId()}"
-                th:text="${exercise.getName()}">
-        </option>
-    </select>
-    <button type="submit">Add exercise</button>
-</form>
-
-<form action="/workout/complete-workout" method="POST">
-    <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
-    <button type="submit">Complete workout</button>
-</form>
-
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -7,26 +7,17 @@
 <body>
 <ul>
     <li th:each="workout : ${workouts}">
-        <th:block th:text="${workout.name}"></th:block> <th:block th:text="${workout.workoutDate}"></th:block>
-        <th:block th:text="${workout.workoutId}"></th:block>
+        <span th:text="${workout.name}"></span>
+        <span th:text="${workout.workoutDate}"></span>
+        <span th:text="${workout.workoutId}"></span>
 
-        <th:block>
-            <form method="post" th:action="@{'/workout/delete/{id}' (id=${workout.getWorkoutId()})}">
-                <button type="submit">
+        <form method="post" th:action="@{'/workout/delete/' + ${workout.getWorkoutId()}}">
+            <button type="submit">Delete</button>
+        </form>
 
-                    <i>Delete</i>
-                </button>
-            </form>
-        </th:block>
-        <th:block>
-            <form method="GET" th:action="@{'/add-existing-workout/{id}' (id=${workout.getWorkoutId()})}">
-                <button type="submit">
-
-                    <i>Track this workout</i>
-                </button>
-            </form>
-        </th:block>
-
+        <form method="GET" th:action="@{'/add-existing-workout/' + ${workout.getWorkoutId()}}">
+            <button type="submit">Track this workout</button>
+        </form>
     </li>
 </ul>
 </body>

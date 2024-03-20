@@ -3,6 +3,8 @@ package com.example.fitjourneyapp.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ public class DoneExercise {
     private Exercise exercise;
 
     @OneToMany(cascade = CascadeType.ALL)
+
     List<ExerciseSet> sets;
 
     public DoneExercise(Exercise exercise) {

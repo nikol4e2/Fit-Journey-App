@@ -3,6 +3,8 @@ package com.example.fitjourneyapp.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class Workout {
     private LocalDate workoutDate;
 
     @OneToMany(cascade= CascadeType.ALL,fetch = FetchType.EAGER)
+
     private List<DoneExercise> exercises;
     private double totalVolume;
     private String comment;

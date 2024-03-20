@@ -1,45 +1,73 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        tr{
-            border: #343a40;
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        h3 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
         }
     </style>
 </head>
 <body>
 
+<div class="container">
+    <h3>Workouts Done</h3>
 
-<h3>Workouts Done</h3>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>See history</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="w: ${workoutsByName}">
+            <td th:text="${w.key}" />
+            <td>
+                <form th:action="@{/workout/history}" th:method="POST">
+                    <input type="hidden" th:value="${w.key}" name="workoutName" >
+                    <button type="submit" class="btn btn-primary">History</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
+    <div><a href="/add-workout" class="btn btn-primary mt-3">Add a new workout or track existing</a></div>
+    <div><a href="/profile/edit" class="btn btn-primary mt-3">Edit profile</a></div>
+    <div><a href="/profile/weight-history" class="btn btn-primary mt-3">See your weight history or add new weight</a></div>
+</div>
 
-<table style="border: solid 1px black;">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>See history</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="w: ${workoutsByName}">
-        <td th:text="${w.key}" />
-        <td>
-            <form th:action="@{/workout/history}" th:method="POST">
-                <input type="hidden" th:value="${w.key}" name="workoutName" >
-                <button type="submit">History</button>
-            </form>
-        </td>
-
-    </tr>
-    </tbody>
-</table>
-
-<div><a href="/add-workout">Add a new workout or track existing</a></div>
-
-<div><a href="/profile/edit">Edit profile</a></div>
-<div><a href="/profile/weight-history">See your weight history or add new weight</a></div>
 </body>
 </html>

@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Weight History</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<form action="/profile/add-weight" method="POST">
-    <input type="hidden" th:value="${user.getUsername()}" name="username">
-    <input type="number" name="weight">
-    <button type="submit">Add weight</button>
-</form>
+<div class="container mt-5">
+    <h2>Weight History</h2>
+    <form action="/profile/add-weight" method="POST" class="mb-4">
+        <div class="form-group">
+            <label for="weight">Enter Weight:</label>
+            <input type="hidden" th:value="${user.getUsername()}" name="username">
+            <input type="number" id="weight" name="weight" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Weight</button>
+    </form>
 
-
-<ul>
-    <li th:each="weight : ${weights}">
-        <th:block th:text="${weight.weightValue}"></th:block> <th:block th:text="${weight.date}"></th:block>
-
-    </li>
-</ul>
+    <ul class="list-group">
+        <li th:each="weight : ${weights}" class="list-group-item">
+            <span th:text="${weight.weightValue}"></span> | <span th:text="${weight.date}"></span>
+        </li>
+    </ul>
+</div>
 </body>
 </html>

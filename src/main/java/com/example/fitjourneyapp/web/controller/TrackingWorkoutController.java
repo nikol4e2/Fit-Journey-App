@@ -100,5 +100,11 @@ public class TrackingWorkoutController {
         }
         return "redirect:/edit-existing/"+workoutId;
     }
+    @PostMapping("/workout/delete-exercise")
+    public String deleteExercise(@RequestParam Long workoutId,@RequestParam Long exerciseId)
+    {
+        this.doneExerciseService.deleteById(exerciseId);
+        return "redirect:/edit-existing/"+workoutId;
+    }
 
 }

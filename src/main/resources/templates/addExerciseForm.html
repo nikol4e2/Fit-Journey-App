@@ -2,20 +2,67 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add exercise</title>
+    <title>Add Exercise</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 <form action="/add-exercise-DB" method="POST">
-    <input type="text" name="name">
-    <select name="muscleType" class="form-control">
-        <option th:if="${muscleTypes} != null"
-                th:each="muscle : ${muscleTypes}"
-                th:value="${muscle}"
-                th:text="${muscle}">
-        </option>
-    </select>
-    <button type="Submit">Add</button>
-
+    <div>
+        <label for="name">Exercise Name:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="muscleType">Muscle Type:</label>
+        <select id="muscleType" name="muscleType" class="form-control" required>
+            <option th:if="${muscleTypes != null}" th:each="muscle : ${muscleTypes}" th:value="${muscle}" th:text="${muscle}"></option>
+        </select>
+    </div>
+    <button type="submit">Add Exercise</button>
 </form>
 </body>
 </html>

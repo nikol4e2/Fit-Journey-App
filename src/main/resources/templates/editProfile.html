@@ -2,47 +2,100 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit profile</title>
+    <title>Edit Profile - Fit Journey</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
 </head>
 <body>
+
 <div class="container">
-    <form class="form-signin mt-xl-5" method="post" action="/edit/profile">
-        <h2 class="form-signin-heading">Register</h2>
+    <form class="form-signin mt-5" method="post" action="/edit/profile">
+        <h2 class="form-signin-heading">Edit Profile</h2>
         <p>
             <label for="username" class="sr-only">Username</label>
-            <input type="text" id="username" name="username" class="form-control"  th:placeholder="${user.getUsername()}" required=""
-                   autofocus="" disabled>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" value="Username" required="" autofocus="" disabled>
         </p>
         <p>
             <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" class="form-control"
-                   required="true">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
         </p>
         <p>
             <label for="repeatedPassword" class="sr-only">Repeat Password</label>
-            <input type="password" id="repeatedPassword" name="repeatPassword" class="form-control"
-                   placeholder="Repeat Password" required="true">
+            <input type="password" id="repeatedPassword" name="repeatPassword" class="form-control" placeholder="Repeat Password" required="">
         </p>
         <p>
             <label for="name" class="sr-only">Name</label>
-            <input type="text" id="name" name="name" class="form-control" th:placeholder="${user.getName()}" required="true" autofocus="" >
+            <input type="text" id="name" name="name" class="form-control" placeholder="Name" value="Name" required="" autofocus="">
         </p>
         <p>
             <label for="surname" class="sr-only">Surname</label>
-            <input type="text" id="surname" name="surname" class="form-control" th:placeholder="${user.getSurname()}" required="true"
-                   autofocus="">
+            <input type="text" id="surname" name="surname" class="form-control" placeholder="Surname" value="Surname" required="" autofocus="">
         </p>
         <p>
             <label for="weight" class="sr-only">Weight</label>
-            <input type="number" min="0" id="weight" name="weight" class="form-control" th:placeholder="${weight}" required="true" autofocus="" step="0.1">
+            <input type="number" min="0" id="weight" name="weight" class="form-control" placeholder="Weight" value="Weight" required="" autofocus="" step="0.1">
         </p>
         <p>
             <label for="birthdate" class="sr-only">Birthday</label>
-            <input type="date" id="birthdate" name="dateOfBirth" class="form-control" th:value="${user.getDateOfBirth()}" required="true" autofocus="">
+            <input type="date" id="birthdate" name="dateOfBirth" class="form-control" placeholder="Birthday" value="2022-01-01" required="" autofocus="">
         </p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save Changes</button>
     </form>
-
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

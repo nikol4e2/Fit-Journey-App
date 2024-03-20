@@ -3,16 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <title>Finalize Workout</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+  </style>
 </head>
 <body>
-<h1>Finalize Workout</h1>
-<div th:text="${workout.getName()}"></div>
-<div th:text="${totalVolume}"></div>
-<form action="/workout/finalize" method="POST">
-  <input type="hidden" name="workoutId" th:value="${workout.getWorkoutId()}">
-  <span>Add comments/ how did you feel?</span>
-  <input type="text" name="comment" >
-  <button type="submit">Finalize Workout</button>
-</form>
+<div class="container">
+  <h1>Finalize Workout</h1>
+  <div th:text="${workout.getName()}"></div>
+  <div th:text="${totalVolume}"></div>
+  <form action="/workout/finalize" method="POST">
+    <input type="hidden" name="workoutId" th:value="${workout.getWorkoutId()}">
+    <div class="form-group">
+      <label for="comment">Add comments/ how did you feel?</label>
+      <input type="text" name="comment" id="comment" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Finalize Workout</button>
+  </form>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </body>
 </html>
