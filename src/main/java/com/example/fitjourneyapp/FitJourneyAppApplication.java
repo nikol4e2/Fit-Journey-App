@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FitJourneyAppApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FitJourneyAppApplication.class, args);
-    }
+        SpringApplication.run(FitJourneyAppApplication.class, args);    }
 
 }
