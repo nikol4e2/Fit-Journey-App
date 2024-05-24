@@ -49,6 +49,12 @@ public class TrackingWorkoutController {
         return "trackworkout";
     }
 
+    @PostMapping(path = "/add-existing-workout")
+    public String track(@RequestParam Long workoutId)
+    {
+        return "redirect:/add-existing-workout/"+workoutId;
+    }
+
     //Imam 2 mapping za get pri tracking na wokrkout, ovoj e dokolku prv pat go kreirame noviot workout so template od stariot
     @GetMapping(path = "/add-existing-workout/{id}")
     public String getTrackWorkout(@PathVariable Long id,  HttpServletRequest request, Model model) {

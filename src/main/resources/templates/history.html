@@ -3,22 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <title>History</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .workout-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .workout-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .workout-actions form {
+            margin-left: 10px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
-<ul>
-    <li th:each="workout : ${workouts}">
-        <span th:text="${workout.name}"></span>
-        <span th:text="${workout.workoutDate}"></span>
-        <span th:text="${workout.workoutId}"></span>
+<div class="container">
+    <h1>History</h1>
+    <ul>
+        <li th:each="workout : ${workouts}">
+            <div class="workout-info">
+                <span th:text="${workout.name}"></span>
+                <span th:text="${workout.workoutDate}"></span>
+                <span th:text="${workout.workoutId}"></span>
+            </div>
+            <div class="workout-actions">
+                <form method="post" th:action="@{'/workout/delete/' + ${workout.getWorkoutId()}}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
 
-        <form method="post" th:action="@{'/workout/delete/' + ${workout.getWorkoutId()}}">
-            <button type="submit">Delete</button>
-        </form>
-
-        <form method="GET" th:action="@{'/add-existing-workout/' + ${workout.getWorkoutId()}}">
-            <button type="submit">Track this workout</button>
-        </form>
-    </li>
-</ul>
+                <form method="GET" th:action="@{'/add-existing-workout/' + ${workout.getWorkoutId()}}">
+                    <button type="submit" class="btn btn-primary">Track this workout</button>
+                </form>
+            </div>
+        </li>
+    </ul>
+</div>
 </body>
 </html>
